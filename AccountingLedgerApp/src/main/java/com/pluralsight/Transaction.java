@@ -54,4 +54,14 @@ public class Transaction {
     public void setAmount(double amount) {
         this.amount = amount;
     }
+
+    public String getFormattedLedgerText() {
+        return String.format("%-12s %-10s %-30s %-20s %10.2f",
+                this.date, this.time, this.description, this.vendor, this.amount);
+    }
+
+    public static String getFormattedLedgerTextHeader() {
+        return    "DATE         TIME       DESCRIPTION                   VENDOR              AMOUNT\n"
+                + "------------ ---------- ------------------------------ -------------------- ----------";
+    }
 }
