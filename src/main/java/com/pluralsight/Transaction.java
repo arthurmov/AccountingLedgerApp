@@ -61,7 +61,7 @@ public class Transaction {
     }
 
     public static String getFormattedLedgerTextHeader() {
-        return    "DATE         TIME       DESCRIPTION                   VENDOR              AMOUNT\n"
+        return    "\nDATE         TIME       DESCRIPTION                   VENDOR              AMOUNT\n"
                 + "------------ ---------- ------------------------------ -------------------- ----------";
     }
 }
