@@ -39,11 +39,11 @@ public class Main {
             switch (option) {
                 case "d":
                     System.out.println("\n[Navigating to Add Deposit screen...]");
-                    showScreenAddDeposit();
+                    showScreenAddTransaction(option);
                     break;
                 case "p":
                     System.out.println("\n[Navigating to Make Payment screen...]");
-                    showScreenMakePayment();
+                    showScreenAddTransaction(option);
                     break;
                 case "l":
                     System.out.println("\n[Navigating to Ledger screen...]");
@@ -60,46 +60,33 @@ public class Main {
         } while(!option.equals("x"));
     }
 
-    private static void showScreenAddDeposit() {
+    private static void showScreenAddTransaction(String option) {
 
         String vendor = console.promptforString("\nEnter Vendor: ");
         double amount = console.promptForDouble("Enter amount: ");
         String description = console.promptforString("Enter Description: ");
 
-        try {
-            FileWriter writer = new FileWriter("transactions.csv", true);
-
-            writer.write(String.format("\n%s|%s|%s|%s|%.2f", LocalDate.now(),
-                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount));
-
-            writer.close();
-
-        } catch (IOException e) {
-            System.out.println("An unexpected error occurred.");
+        if (option.equalsIgnoreCase("p")) {
+            amount = -Math.abs(amount); // Payments must be negative
         }
-
-        System.out.println("\nSuccessfully added a deposit!");
-    }
-
-    private static void showScreenMakePayment() {
-        String vendor = console.promptforString("\nEnter Vendor: ");
-        double amount = console.promptForDouble("Enter amount: ");
-        String description = console.promptforString("Enter Description: ");
-
-        amount = -Math.abs(amount); // payment is negative
 
         try {
             FileWriter writer = new FileWriter("transactions.csv", true);
 
-            writer.write(String.format("\n%s|%s|%s|%s|%.2f", LocalDate.now(),
-                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount));
+            writer.write(String.format("\n%s|%s|%s|%s|%.2f",
+                    LocalDate.now(), LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
+                    description, vendor, amount));
 
             writer.close();
-
         } catch (IOException e) {
-            System.out.println("An unexpected error occurred.");
+            System.out.println("An unexpected error occurred while saving the transaction.");
         }
 
-        System.out.println("\nSuccessfully made a payment!");
+        if (option.equalsIgnoreCase("d")) {
+            System.out.println("\nSuccessfully added a deposit!");
+        } else if (option.equalsIgnoreCase("p")) {
+            System.out.println("\nSuccessfully made a payment!");
+        }
     }
+
 }

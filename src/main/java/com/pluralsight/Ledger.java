@@ -70,7 +70,7 @@ public class Ledger {
     public static Transaction[] getAllEntries() {
 
         try {
-            FileReader fr = new FileReader("transactions.csv"); //open and read the file line by line
+            FileReader fr = new FileReader("transactions.csv"); //open and read the file
             BufferedReader reader = new BufferedReader(fr);
 
             ArrayList<Transaction> transactionsList = new ArrayList<>();
