@@ -36,11 +36,11 @@ public class Ledger {
                     break;
                 case "d":
                     System.out.println("\n[Displaying deposit entries...]");
-                    showScreenDeposits();
+                    showScreenDepositsOrPayments(option);
                     break;
                 case "p":
                     System.out.println("\n[Displaying payment entries...]");
-                    showScreenPayments();
+                    showScreenDepositsOrPayments(option);
                     break;
                 case "r":
                     System.out.println("\n[Navigating to Reports menu...]");
@@ -110,32 +110,21 @@ public class Ledger {
         return result;
     }
 
-    private static void showScreenDeposits() {
+    private static void showScreenDepositsOrPayments(String option) {
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
-        for(Transaction transaction : transactions) {
-            if(transaction.getAmount() < 0) {
-                continue;
+        for (Transaction transaction : transactions) {
+            if (option.equalsIgnoreCase("d") && transaction.getAmount() < 0) {
+                continue; // skip payments if showing deposits
             }
+            if (option.equalsIgnoreCase("p") && transaction.getAmount() > 0) {
+                continue; // skip deposits if showing payments
+            }
+
             System.out.println(transaction.getFormattedLedgerText());
         }
 
-        System.out.println( "\nReturning to Ledger Screen...\n" +
-                "Please wait.");
-    }
-
-    private static void showScreenPayments() {
-        System.out.println(Transaction.getFormattedLedgerTextHeader());
-
-        for(Transaction transaction : transactions) {
-            if(transaction.getAmount() > 0) {
-                continue;
-            }
-            System.out.println(transaction.getFormattedLedgerText());
-        }
-
-        System.out.println( "\nReturning to Ledger Screen...\n" +
-                "Please wait.");
+        System.out.println("\nReturning to Ledger Screen...\nPlease wait.");
     }
 
     private static void showScreenReports() {
