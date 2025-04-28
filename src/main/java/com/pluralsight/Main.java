@@ -1,11 +1,5 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.regex.Pattern;
-
 public class Main {
 
     private static Console console = new Console();

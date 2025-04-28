@@ -3,6 +3,7 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
@@ -62,6 +63,7 @@ public class Ledger {
         for (Transaction transaction : transactions) {
             System.out.println(transaction.getFormattedLedgerText());
         }
+
         System.out.println( "\nReturning to Ledger Screen...\n" +
                 "Please wait.");
     }
@@ -69,23 +71,26 @@ public class Ledger {
     public static Transaction[] getAllEntries() {
 
         try {
-            FileReader fr = new FileReader("transactions.csv");
+            FileReader fr = new FileReader("transactions.csv"); //open and read the file line by line
             BufferedReader reader = new BufferedReader(fr);
 
-            Transaction[] transactionTemp = new Transaction[100];
-            int size = 0;
+            ArrayList<Transaction> transactionsList = new ArrayList<>();
             String dataString;
 
-            while ((dataString = reader.readLine()) != null) {
+            while ((dataString = reader.readLine()) != null) { //read the file line by line
 
-                transactionTemp[size] = getTransactionFromEncodedString(dataString);
-
-                size++;
+                Transaction transaction = getTransactionFromEncodedString(dataString);
+                transactionsList.add(transaction);
             }
 
-            Transaction[] transactionFinal = Arrays.copyOf(transactionTemp, size);
+            reader.close();
 
-            return transactionFinal;
+            Transaction[] transactions = new Transaction[transactionsList.size()];
+            transactions = transactionsList.toArray(transactions);
+
+            return transactions; //return final array
+
+        // catch file reading problems
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -93,15 +98,15 @@ public class Ledger {
 
     private static Transaction getTransactionFromEncodedString(String encodedTransaction) {
 
-        String[] temp = encodedTransaction.split(Pattern.quote("|"));
+        String[] temp = encodedTransaction.split(Pattern.quote("|")); //split the line
 
-        String date = temp[0];
+        String date = temp[0]; //assigns each part to a variable
         String time = temp[1];
         String description = temp[2];
         String vendor = temp[3];
         double amount = Double.parseDouble(temp[4]);
 
-        Transaction result = new Transaction(date, time, description, vendor, amount);
+        Transaction result = new Transaction(date, time, description, vendor, amount); //make transaction object with all info and return
         return result;
     }
 
