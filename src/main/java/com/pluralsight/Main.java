@@ -2,6 +2,9 @@ package com.pluralsight;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
 
@@ -59,18 +62,18 @@ public class Main {
     }
 
     private static void showScreenAddDeposit() {
-        System.out.println("Todo ... time and date");
 
-        String vendor = console.promptforString("Enter Vendor: ");
+        String vendor = console.promptforString("\nEnter Vendor: ");
         double amount = console.promptForDouble("Enter amount: ");
         String description = console.promptforString("Enter Description: ");
 
         try {
-            FileWriter writer = new FileWriter("transactions.csv");
+            FileWriter writer = new FileWriter("transactions.csv", true);
 
-            writer.write(String.format("%s|%s|%.2f",description, vendor, amount));
+            writer.write(String.format("%s|%s|%s|%s|%.2f\n", LocalDate.now(), LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount));
 
             writer.close();
+
         } catch (IOException e) {
             System.out.println("An unexpected error occurred.");
         }
