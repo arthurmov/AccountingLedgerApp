@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Main {
 
     private static Console console = new Console();
@@ -56,7 +59,21 @@ public class Main {
     }
 
     private static void showScreenAddDeposit() {
+        System.out.println("Todo ... time and date");
 
+        String vendor = console.promptforString("Enter Vendor: ");
+        double amount = console.promptForDouble("Enter amount: ");
+        String description = console.promptforString("Enter Description: ");
+
+        try {
+            FileWriter writer = new FileWriter("transactions.csv");
+
+            writer.write(String.format("%s|%s|%.2f",description, vendor, amount));
+
+            writer.close();
+        } catch (IOException e) {
+            System.out.println("An unexpected error occurred.");
+        }
     }
 
     private static void showScreenMakePayment() {
