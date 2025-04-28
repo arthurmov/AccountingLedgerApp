@@ -86,7 +86,7 @@ public class Main {
         double amount = console.promptForDouble("Enter amount: ");
         String description = console.promptforString("Enter Description: ");
 
-        amount = -Math.abs(amount);
+        amount = -Math.abs(amount); // payment is negative
 
         try {
             FileWriter writer = new FileWriter("transactions.csv", true);

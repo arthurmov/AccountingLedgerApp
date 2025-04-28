@@ -99,7 +99,8 @@ public class Ledger {
 
         String[] temp = encodedTransaction.split(Pattern.quote("|")); //split the line
 
-        String date = temp[0]; //assigns each part to a variable
+        //assigns each part to a variable
+        String date = temp[0];
         String time = temp[1];
         String description = temp[2];
         String vendor = temp[3];
@@ -110,11 +111,31 @@ public class Ledger {
     }
 
     private static void showScreenDeposits() {
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        for(Transaction transaction : transactions) {
+            if(transaction.getAmount() < 0) {
+                continue;
+            }
+            System.out.println(transaction.getFormattedLedgerText());
+        }
+
+        System.out.println( "\nReturning to Ledger Screen...\n" +
+                "Please wait.");
     }
 
     private static void showScreenPayments() {
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        for(Transaction transaction : transactions) {
+            if(transaction.getAmount() > 0) {
+                continue;
+            }
+            System.out.println(transaction.getFormattedLedgerText());
+        }
+
+        System.out.println( "\nReturning to Ledger Screen...\n" +
+                "Please wait.");
     }
 
     private static void showScreenReports() {
