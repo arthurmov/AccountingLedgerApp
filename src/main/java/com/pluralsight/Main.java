@@ -24,10 +24,10 @@ public class Main {
 
         String homeScreenPrompt =  "\nAccounting Ledger App\n" +
                 "----------------------------------\n" +
-                "[D] Add Deposit         - Record a deposit transaction\n" +
+                "[D] Add Deposit          - Record a deposit transaction\n" +
                 "[P] Make Payment (Debit) - Record a payment or expense\n" +
-                "[L] View Ledger         - View transaction history\n" +
-                "[X] Exit                - Close the application\n" +
+                "[L] View Ledger          - View transaction history\n" +
+                "[X] Exit                 - Close the application\n" +
                 "\n" +
                 "Enter your selection: ";
 
@@ -39,17 +39,23 @@ public class Main {
 
             switch (option) {
                 case "d":
+                    System.out.println("\n[Navigating to Add Deposit screen...]");
                     showScreenAddDeposit();
                     break;
                 case "p":
+                    System.out.println("\n[Navigating to Make Payment screen...]");
                     showScreenMakePayment();
                     break;
                 case "l":
+                    System.out.println("\n[Navigating to Ledger screen...]");
                     showScreenLedger();
                     break;
                 case "x":
                     System.out.println("\nThank you for using the Accounting Ledger App.\n" +
                             "Goodbye!\n");
+                    break;
+                default:
+                    System.out.println("\nInvalid option. Please try again.");
                     break;
             }
         } while(!option.equals("x"));
@@ -83,20 +89,27 @@ public class Main {
 
             switch (option) {
                 case "a":
+                    System.out.println("\n[Displaying all entries...]");
                     showScreenEntries();
                     break;
                 case "d":
+                    System.out.println("\n[Displaying deposit entries...]");
                     showScreenDeposits();
                     break;
                 case "p":
+                    System.out.println("\n[Displaying payment entries...]");
                     showScreenPayments();
                     break;
                 case "r":
+                    System.out.println("\n[Navigating to Reports menu...]");
                     showScreenReports();
                     break;
                 case "h":
                     System.out.println( "\nReturning to Home Page...\n" +
                             "Please wait.");
+                    break;
+                default:
+                    System.out.println("\nInvalid option. Please try again.");
                     break;
             }
         } while(!option.equals("h"));
@@ -107,6 +120,8 @@ public class Main {
         for (Transaction transaction : transactions) {
             System.out.println(transaction.getFormattedLedgerText());
         }
+        System.out.println( "\nReturning to Ledger Screen...\n" +
+                "Please wait.");
     }
 
     private static Transaction[] getAllEntries() {
@@ -176,18 +191,26 @@ public class Main {
 
             switch (option) {
                 case 1:
+                    System.out.println("\n[Generating Month-To-Date report...]");
                     break;
                 case 2:
+                    System.out.println("\n[Generating Previous Month report...]");
                     break;
                 case 3:
+                    System.out.println("\n[Generating Year-To-Date report...]");
                     break;
                 case 4:
+                    System.out.println("\n[Generating Previous Year report...]");
                     break;
                 case 5:
+                    System.out.println("\n[Searching transactions by vendor...]");
                     break;
                 case 0:
                     System.out.println( "\nReturning to Ledger Screen...\n" +
                             "Please wait.");
+                    break;
+                default:
+                    System.out.println("\nInvalid option. Please try again.");
                     break;
             }
         } while(option != 0);
