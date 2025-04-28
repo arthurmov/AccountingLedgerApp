@@ -9,7 +9,6 @@ import java.time.format.DateTimeFormatter;
 public class Main {
 
     private static Console console = new Console();
-    private static Transaction[] transactions = Ledger.getAllEntries();
 
     public static void main(String[] args) {
 
@@ -70,7 +69,8 @@ public class Main {
         try {
             FileWriter writer = new FileWriter("transactions.csv", true);
 
-            writer.write(String.format("\n%s|%s|%s|%s|%.2f", LocalDate.now(), LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount));
+            writer.write(String.format("\n%s|%s|%s|%s|%.2f", LocalDate.now(),
+                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount));
 
             writer.close();
 
@@ -82,6 +82,24 @@ public class Main {
     }
 
     private static void showScreenMakePayment() {
+        String vendor = console.promptforString("\nEnter Vendor: ");
+        double amount = console.promptForDouble("Enter amount: ");
+        String description = console.promptforString("Enter Description: ");
 
+        amount = -Math.abs(amount);
+
+        try {
+            FileWriter writer = new FileWriter("transactions.csv", true);
+
+            writer.write(String.format("\n%s|%s|%s|%s|%.2f", LocalDate.now(),
+                    LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")), description, vendor, amount));
+
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("An unexpected error occurred.");
+        }
+
+        System.out.println("\nSuccessfully made a payment!");
     }
 }
