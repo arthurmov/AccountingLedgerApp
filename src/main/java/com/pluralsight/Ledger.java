@@ -73,19 +73,18 @@ public class Ledger {
             FileReader fr = new FileReader("transactions.csv"); //open and read the file
             BufferedReader reader = new BufferedReader(fr);
 
-            ArrayList<Transaction> transactionsList = new ArrayList<>();
             String dataString;
 
             while ((dataString = reader.readLine()) != null) { //read the file line by line
 
                 Transaction transaction = getTransactionFromEncodedString(dataString);
-                transactionsList.add(transaction);
+                Main.transactionsList.add(transaction);
             }
 
             reader.close();
 
-            Transaction[] transactions = new Transaction[transactionsList.size()];
-            transactions = transactionsList.toArray(transactions);
+            Transaction[] transactions = new Transaction[Main.transactionsList.size()];
+            transactions = Main.transactionsList.toArray(transactions);
 
             return transactions; //return final array
 

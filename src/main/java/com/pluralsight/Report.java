@@ -1,5 +1,8 @@
 package com.pluralsight;
 
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+
 public class Report {
 
     private static Console console = new Console();
@@ -25,18 +28,23 @@ public class Report {
             switch (option) {
                 case 1:
                     System.out.println("\n[Generating Month-To-Date report...]");
+                    showScreenMonthToDate();
                     break;
                 case 2:
                     System.out.println("\n[Generating Previous Month report...]");
+                    showScreenPreviousMonth();
                     break;
                 case 3:
                     System.out.println("\n[Generating Year-To-Date report...]");
+                    showScreenYearToDate();
                     break;
                 case 4:
                     System.out.println("\n[Generating Previous Year report...]");
+                    showScreenPreviousYear();
                     break;
                 case 5:
                     System.out.println("\n[Searching transactions by vendor...]");
+                    showScreenSearchByVendor();
                     break;
                 case 0:
                     System.out.println( "\nReturning to Ledger Screen...\n" +
@@ -47,5 +55,27 @@ public class Report {
                     break;
             }
         } while(option != 0);
+    }
+
+    private static void showScreenMonthToDate() {
+
+    }
+
+    private static void showScreenPreviousMonth() {
+
+    }
+
+    private static void showScreenYearToDate() {
+
+    }
+
+    private static void showScreenPreviousYear() {
+
+    }
+
+    private static void showScreenSearchByVendor() {
+        String vendor = console.promptforString("Enter the vendor name: ");
+
+
     }
 }
