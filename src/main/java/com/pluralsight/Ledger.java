@@ -105,8 +105,8 @@ public class Ledger {
         String vendor = temp[3];
         double amount = Double.parseDouble(temp[4]);
 
-        Transaction result = new Transaction(date, time, description, vendor, amount); //make transaction object with all info and return
-        return result;
+        //return all info
+        return new Transaction(date, time, description, vendor, amount);
     }
 
     private static void showScreenDepositsOrPayments(String option) {

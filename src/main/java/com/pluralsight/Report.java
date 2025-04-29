@@ -1,7 +1,6 @@
 package com.pluralsight;
 
-import java.util.ArrayList;
-import java.util.regex.Pattern;
+import java.time.LocalDate;
 
 public class Report {
 
@@ -59,23 +58,64 @@ public class Report {
 
     private static void showScreenMonthToDate() {
 
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
+
+        for (Transaction transaction : Ledger.getAllEntries()) {
+            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+
+            if (transactionDate.getYear() == LocalDate.now().getYear() &&
+                    transactionDate.getMonth() == LocalDate.now().getMonth()) {
+
+                System.out.println(transaction.getFormattedLedgerText());
+            }
+        }
+
+        System.out.println( "\nReturning to Reports Screen...\n" +
+                "Please wait.");
     }
 
     private static void showScreenPreviousMonth() {
 
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
+
+        for (Transaction transaction : Ledger.getAllEntries()) {
+            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+
+            if (transactionDate.getYear() == LocalDate.now().getYear() &&
+                    transactionDate.getMonth() == LocalDate.now().getMonth().minus(1)) {
+
+                System.out.println(transaction.getFormattedLedgerText());
+            }
+        }
+
+        System.out.println( "\nReturning to Reports Screen...\n" +
+                "Please wait.");
     }
 
     private static void showScreenYearToDate() {
 
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
+
+
+        System.out.println( "\nReturning to Reports Screen...\n" +
+                "Please wait.");
     }
 
     private static void showScreenPreviousYear() {
 
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
+
+
+        System.out.println( "\nReturning to Reports Screen...\n" +
+                "Please wait.");
     }
 
     private static void showScreenSearchByVendor() {
+
         String vendor = console.promptforString("Enter the vendor name: ");
 
-
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
+        System.out.println( "\nReturning to Reports Screen...\n" +
+                "Please wait.");
     }
 }
