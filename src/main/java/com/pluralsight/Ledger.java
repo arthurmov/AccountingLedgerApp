@@ -73,6 +73,8 @@ public class Ledger {
             FileReader fr = new FileReader("transactions.csv"); //open and read the file
             BufferedReader reader = new BufferedReader(fr);
 
+            Main.transactionsList.clear(); //clear existing data before adding new
+
             String dataString;
 
             while ((dataString = reader.readLine()) != null) { //read the file line by line

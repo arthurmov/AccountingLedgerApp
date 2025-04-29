@@ -96,6 +96,14 @@ public class Report {
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        for (Transaction transaction : Ledger.getAllEntries()) {
+            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+
+            if (transactionDate.getYear() == LocalDate.now().getYear()) {
+
+                System.out.println(transaction.getFormattedLedgerText());
+            }
+        }
 
         System.out.println( "\nReturning to Reports Screen...\n" +
                 "Please wait.");
@@ -105,6 +113,14 @@ public class Report {
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        for (Transaction transaction : Ledger.getAllEntries()) {
+            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+
+            if (transactionDate.getYear() == LocalDate.now().getYear()-1) {
+
+                System.out.println(transaction.getFormattedLedgerText());
+            }
+        }
 
         System.out.println( "\nReturning to Reports Screen...\n" +
                 "Please wait.");
@@ -112,9 +128,18 @@ public class Report {
 
     private static void showScreenSearchByVendor() {
 
-        String vendor = console.promptforString("Enter the vendor name: ");
+        String vendor = console.promptforString("\nEnter the vendor name: ");
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
+
+        for (Transaction transaction : Ledger.getAllEntries()) {
+
+            if (vendor.equalsIgnoreCase(transaction.getVendor())) {
+
+                System.out.println(transaction.getFormattedLedgerText());
+            }
+        }
+
         System.out.println( "\nReturning to Reports Screen...\n" +
                 "Please wait.");
     }
