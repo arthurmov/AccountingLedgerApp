@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class Main {
 
     private static Console console = new Console();
-    public static ArrayList<Transaction> transactionsList = new ArrayList<>();
+    public static ArrayList<Transaction> transactionsList = new ArrayList<>(); //holds all entries in memory
 
     public static void main(String[] args) {
 

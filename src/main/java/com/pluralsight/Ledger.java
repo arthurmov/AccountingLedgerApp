@@ -3,13 +3,13 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class Ledger {
 
     private static Console console = new Console();
-    private static Transaction[] transactions = getAllEntries();
+    private static List<Transaction> transactions = getAllEntries();
 
     public static void showScreenLedger() {
 
@@ -67,10 +67,11 @@ public class Ledger {
                 "Please wait.");
     }
 
-    public static Transaction[] getAllEntries() {
+    public static List<Transaction> getAllEntries() {
 
         try {
-            FileReader fr = new FileReader("transactions.csv"); //open and read the file
+            //open and read the file
+            FileReader fr = new FileReader("transactions.csv");
             BufferedReader reader = new BufferedReader(fr);
 
             Main.transactionsList.clear(); //clear existing data before adding new
@@ -79,16 +80,13 @@ public class Ledger {
 
             while ((dataString = reader.readLine()) != null) { //read the file line by line
 
-                Transaction transaction = getTransactionFromEncodedString(dataString);
-                Main.transactionsList.add(transaction);
+                Transaction transaction = getTransactionFromEncodedString(dataString); //turns a line into an object
+                Main.transactionsList.add(transaction); //adds each object to the global ArrayList
             }
 
-            reader.close();
+            reader.close(); //closes the file after finished reading
 
-            Transaction[] transactions = new Transaction[Main.transactionsList.size()];
-            transactions = Main.transactionsList.toArray(transactions);
-
-            return transactions; //return final array
+            return Main.transactionsList; //returns full list of transactions
 
         // catch file reading problems
         } catch (IOException e) {
