@@ -95,6 +95,7 @@ public class Main {
                     System.out.println(ColorCodes.RED + "\nInvalid date format. Please use MM/dd/yyyy." + ColorCodes.RESET);
                 }
             }
+<<<<<<< HEAD
 
             // Loop until the user enters a valid time in HH:mm:ss 24-hour format
             while (true) {
@@ -107,6 +108,21 @@ public class Main {
                     System.out.println(ColorCodes.RED + "\nInvalid time format. Please use HH:mm:ss (24-hour)." + ColorCodes.RESET);
                 }
             }
+=======
+
+            // Loop until the user enters a valid time in HH:mm:ss 24-hour format
+            while (true) {
+                try {
+                    String customTime = console.promptForString("\nEnter the Time (24-hour format, HH:mm:ss): ");
+                    time = LocalTime.parse(customTime, timeFormatter); // Parse user input to LocalTime
+                    break; // Exit the loop if parsing is successful
+                } catch (DateTimeParseException e) {
+                    // Handle incorrect format input and prompt again
+                    System.out.println(ColorCodes.RED + "\nInvalid time format. Please use HH:mm:ss (24-hour)." + ColorCodes.RESET);
+                }
+            }
+
+>>>>>>> 912ee1ee5a374767c47da8eb1ece45422b34d0ad
         }
 
         else {
