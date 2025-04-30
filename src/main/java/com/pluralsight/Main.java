@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
 public class Main {
@@ -83,16 +84,35 @@ public class Main {
             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
-            String customDate = console.promptForString("\nEnter the Date: (MM/dd/yyyy)");
-            date = LocalDate.parse(customDate,dateFormatter); //reformatting the users date input
+            // Loop until the user enters a valid date in MM/dd/yyyy format
+            while (true) {
+                try {
+                    String customDate = console.promptForString("\nEnter the Date: (MM/dd/yyyy)");
+                    date = LocalDate.parse(customDate, dateFormatter); // Parse user input to LocalDate
+                    break; // Exit the loop if parsing is successful
+                } catch (DateTimeParseException e) {
+                    // Handle incorrect format input and prompt again
+                    System.out.println(ColorCodes.RED + "\nInvalid date format. Please use MM/dd/yyyy." + ColorCodes.RESET);
+                }
+            }
 
-            String customTime = console.promptForString("\nEnter the Time (24-hour format, HH:mm:ss): ");
-            time = LocalTime.parse(customTime, timeFormatter); //reformatting the users time input
+            // Loop until the user enters a valid time in HH:mm:ss 24-hour format
+            while (true) {
+                try {
+                    String customTime = console.promptForString("\nEnter the Time (24-hour format, HH:mm:ss): ");
+                    time = LocalTime.parse(customTime, timeFormatter); // Parse user input to LocalTime
+                    break; // Exit the loop if parsing is successful
+                } catch (DateTimeParseException e) {
+                    // Handle incorrect format input and prompt again
+                    System.out.println(ColorCodes.RED + "\nInvalid time format. Please use HH:mm:ss (24-hour)." + ColorCodes.RESET);
+                }
+            }
+
         }
 
         else {
             //sets date and time to current by default
-            System.out.println(ColorCodes.RED + "Invalid selection. Defaulting to current date and time." + ColorCodes.RESET);
+            System.out.println(ColorCodes.YELLOW + "\nInvalid selection. Defaulting to current date and time." + ColorCodes.RESET);
             date = LocalDate.now();
             time = LocalTime.now();
         }
