@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -15,7 +17,7 @@ public class Ledger {
 
     public static void showScreenLedger() {
 
-        String ledgerScreenPrompt = "\nLedger Menu\n" +
+        String ledgerScreenPrompt = ColorCodes.BLUE + "\nLedger Menu\n" + ColorCodes.RESET +
                 "-----------\n" +
                 "[A] All Entries   - View all transactions\n" +
                 "[D] Deposits Only - View only deposit entries\n" +
@@ -60,6 +62,7 @@ public class Ledger {
     }
 
     private static void showScreenEntries() {
+        transactions = getAllEntries(); //refresh from file
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
         for (Transaction transaction : transactions) {
@@ -89,6 +92,11 @@ public class Ledger {
 
             reader.close(); //closes the file after finished reading
 
+            //sorts the entries to newest first
+            Main.transactionsList.sort(Comparator.comparing(
+                    (Transaction t) -> LocalDateTime.of(t.getDate(), t.getTime())
+            ));
+
             return Main.transactionsList; //returns full list of transactions
 
         // catch file reading problems
@@ -113,6 +121,7 @@ public class Ledger {
     }
 
     private static void showScreenDepositsOrPayments(String option) {
+        transactions = getAllEntries(); //refresh from file
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
         for (Transaction transaction : transactions) {

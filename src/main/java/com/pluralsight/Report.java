@@ -8,7 +8,7 @@ public class Report {
 
     public static void showScreenReports() {
 
-        String reportsScreenPrompt = "\nReports Menu\n" +
+        String reportsScreenPrompt = ColorCodes.BLUE + "\nReports Menu\n" + ColorCodes.RESET +
                 "------------\n" +
                 "[1] Month To Date    - Transactions from this month\n" +
                 "[2] Previous Month   - Transactions from last month\n" +
@@ -44,6 +44,9 @@ public class Report {
                 case 5:
                     System.out.println("\n[Searching transactions by vendor...]");
                     showScreenSearchByVendor();
+                    break;
+                case 6:
+                    System.out.println("\n[Loading custom search...]");
                     break;
                 case 0:
                     System.out.println( "\nReturning to Ledger Screen...\n" +

@@ -23,7 +23,7 @@ public class Main {
 
     public static void showScreenHome() {
 
-        String homeScreenPrompt =  "\nAccounting Ledger App\n" +
+        String homeScreenPrompt =  ColorCodes.BLUE + "\nAccounting Ledger App\n" + ColorCodes.RESET +
                 "----------------------------------\n" +
                 "[D] Add Deposit          - Record a deposit transaction\n" +
                 "[P] Make Payment (Debit) - Record a payment or expense\n" +
@@ -80,14 +80,14 @@ public class Main {
 
         else if(dateTimeInput == 2) {
             //formats the date
-            DateTimeFormatter dateFormatter;
-            dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
 
             String customDate = console.promptForString("\nEnter the Date: (MM/dd/yyyy)");
             date = LocalDate.parse(customDate,dateFormatter); //reformatting the users date input
 
             String customTime = console.promptForString("\nEnter the Time (24-hour format, HH:mm:ss): ");
-            time = LocalTime.parse(customTime); //reformatting the users time input
+            time = LocalTime.parse(customTime, timeFormatter); //reformatting the users time input
         }
 
         else {
@@ -108,7 +108,10 @@ public class Main {
         try {
             FileWriter writer = new FileWriter("transactions.csv", true); //opens the file
 
-            writer.write(String.format("\n%s|%s|%s|%s|%.2f", date, time, description, vendor, amount)); //writes user given data to the file
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            String formattedTime = time.format(timeFormatter);
+
+            writer.write(String.format("\n%s|%s|%s|%s|%.2f", date, formattedTime, description, vendor, amount)); //writes user given data to the file
 
             writer.close(); //closes the file after finished writing
 
@@ -118,7 +121,7 @@ public class Main {
 
         if (option.equalsIgnoreCase("d")) {
             System.out.println(ColorCodes.GREEN + "\nSuccessfully added a deposit!" + ColorCodes.RESET);
-            
+
         } else if (option.equalsIgnoreCase("p")) {
             System.out.println(ColorCodes.GREEN + "\nSuccessfully made a payment!" + ColorCodes.RESET);
         }
