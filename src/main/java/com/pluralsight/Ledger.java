@@ -28,7 +28,7 @@ public class Ledger {
         String option;
 
         do {
-            option = console.promptforString(ledgerScreenPrompt);
+            option = console.promptForString(ledgerScreenPrompt);
             option = option.toLowerCase();
 
             switch (option) {

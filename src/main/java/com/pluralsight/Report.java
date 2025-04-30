@@ -128,7 +128,7 @@ public class Report {
 
     private static void showScreenSearchByVendor() {
 
-        String vendor = console.promptforString("\nEnter the vendor name: ");
+        String vendor = console.promptForString("\nEnter the vendor name: ");
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 

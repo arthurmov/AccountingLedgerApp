@@ -35,7 +35,7 @@ public class Main {
         String option;
 
         do {
-            option = console.promptforString(homeScreenPrompt);
+            option = console.promptForString(homeScreenPrompt);
             option = option.toLowerCase();
 
             switch (option) {
@@ -64,9 +64,34 @@ public class Main {
 
     private static void showScreenAddTransaction(String option) {
 
-        String vendor = console.promptforString("\nEnter Vendor: ");
+        LocalDate date;
+        LocalTime time;
+
+        double dateTimeInput = console.promptForDouble("\nWould you like to use the current Date and Time or input a custom Date and Time?\n" +
+                "[1] Current\n" +
+                "[2] Custom\n" +
+                "Enter Your selection: ");
+
+        if(dateTimeInput == 1) {
+            date = LocalDate.now();
+            time = LocalTime.now();
+        }
+
+        if(dateTimeInput == 2) {
+            //formats the date
+            DateTimeFormatter dateFormatter;
+            dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+
+            String customDate = console.promptForString("Enter the Date: (MM/dd/yyyy)");
+            LocalDate.parse(customDate,dateFormatter);
+
+            String customTime = console.promptForString("Enter the Time: (HH:mm:ss)\n");
+            LocalTime.parse(customTime);
+        }
+
+        String vendor = console.promptForString("\nEnter Vendor: ");
         double amount = console.promptForDouble("Enter amount: ");
-        String description = console.promptforString("Enter Description: ");
+        String description = console.promptForString("Enter Description: ");
 
         if (option.equalsIgnoreCase("p")) {
             amount = -Math.abs(amount); // Payments must be negative
@@ -75,9 +100,7 @@ public class Main {
         try {
             FileWriter writer = new FileWriter("transactions.csv", true);
 
-            writer.write(String.format("\n%s|%s|%s|%s|%.2f",
-                    LocalDate.now(), LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")),
-                    description, vendor, amount));
+            writer.write(String.format("\n%s|%s|%s|%s|%.2f", date, time, description, vendor, amount));
 
             writer.close();
         } catch (IOException e) {

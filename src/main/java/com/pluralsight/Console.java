@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Console {
@@ -23,7 +24,7 @@ public class Console {
         return result;
     }
 
-    public String promptforString(String prompt) {
+    public String promptForString(String prompt) {
         System.out.println(prompt);
         return scanner.nextLine();
     }
