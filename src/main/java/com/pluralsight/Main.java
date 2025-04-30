@@ -107,7 +107,6 @@ public class Main {
                     System.out.println(ColorCodes.RED + "\nInvalid time format. Please use HH:mm:ss (24-hour)." + ColorCodes.RESET);
                 }
             }
-
         }
 
         else {

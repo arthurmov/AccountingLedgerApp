@@ -47,6 +47,7 @@ public class Report {
                     break;
                 case 6:
                     System.out.println("\n[Loading custom search...]");
+                    showScreenCustomSearch();
                     break;
                 case 0:
                     System.out.println( "\nReturning to Ledger Screen...\n" +
@@ -145,5 +146,9 @@ public class Report {
 
         System.out.println( "\nReturning to Reports Screen...\n" +
                 "Please wait.");
+    }
+
+    private static void showScreenCustomSearch() {
+
     }
 }
