@@ -18,6 +18,7 @@ public class Console {
 
             } catch (Exception e) {
                 System.out.println(ColorCodes.RED + "Invalid Entry, try again!" + ColorCodes.RESET);
+                scanner.nextLine(); //clears invalid input
             }
         }
 

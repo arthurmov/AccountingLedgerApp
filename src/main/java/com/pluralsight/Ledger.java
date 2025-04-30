@@ -61,6 +61,7 @@ public class Ledger {
 
     private static void showScreenEntries() {
         System.out.println(Transaction.getFormattedLedgerTextHeader());
+
         for (Transaction transaction : transactions) {
             System.out.println(transaction.getFormattedLedgerText());
         }

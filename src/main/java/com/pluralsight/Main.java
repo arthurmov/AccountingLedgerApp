@@ -73,20 +73,28 @@ public class Main {
                 "Enter Your selection: ");
 
         if(dateTimeInput == 1) {
+            //setting date and time variables to the current date and time
             date = LocalDate.now();
             time = LocalTime.now();
         }
 
-        if(dateTimeInput == 2) {
+        else if(dateTimeInput == 2) {
             //formats the date
             DateTimeFormatter dateFormatter;
             dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
-            String customDate = console.promptForString("Enter the Date: (MM/dd/yyyy)");
-            LocalDate.parse(customDate,dateFormatter);
+            String customDate = console.promptForString("\nEnter the Date: (MM/dd/yyyy)");
+            date = LocalDate.parse(customDate,dateFormatter); //reformatting the users date input
 
-            String customTime = console.promptForString("Enter the Time: (HH:mm:ss)\n");
-            LocalTime.parse(customTime);
+            String customTime = console.promptForString("\nEnter the Time (24-hour format, HH:mm:ss): ");
+            time = LocalTime.parse(customTime); //reformatting the users time input
+        }
+
+        else {
+            //sets date and time to current by default
+            System.out.println(ColorCodes.RED + "Invalid selection. Defaulting to current date and time." + ColorCodes.RESET);
+            date = LocalDate.now();
+            time = LocalTime.now();
         }
 
         String vendor = console.promptForString("\nEnter Vendor: ");
@@ -98,17 +106,19 @@ public class Main {
         }
 
         try {
-            FileWriter writer = new FileWriter("transactions.csv", true);
+            FileWriter writer = new FileWriter("transactions.csv", true); //opens the file
 
-            writer.write(String.format("\n%s|%s|%s|%s|%.2f", date, time, description, vendor, amount));
+            writer.write(String.format("\n%s|%s|%s|%s|%.2f", date, time, description, vendor, amount)); //writes user given data to the file
 
-            writer.close();
+            writer.close(); //closes the file after finished writing
+
         } catch (IOException e) {
             System.out.println(ColorCodes.RED + "An unexpected error occurred while saving the transaction." + ColorCodes.RESET);
         }
 
         if (option.equalsIgnoreCase("d")) {
             System.out.println(ColorCodes.GREEN + "\nSuccessfully added a deposit!" + ColorCodes.RESET);
+            
         } else if (option.equalsIgnoreCase("p")) {
             System.out.println(ColorCodes.GREEN + "\nSuccessfully made a payment!" + ColorCodes.RESET);
         }
