@@ -50,7 +50,7 @@ public class Report {
                             "Please wait.");
                     break;
                 default:
-                    System.out.println("\nInvalid option. Please try again.");
+                    System.out.println(ColorCodes.RED + "\nInvalid option. Please try again." + ColorCodes.RESET);
                     break;
             }
         } while(option != 0);
@@ -61,7 +61,7 @@ public class Report {
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
         for (Transaction transaction : Ledger.getAllEntries()) {
-            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+            LocalDate transactionDate = transaction.getDate();
 
             if (transactionDate.getYear() == LocalDate.now().getYear() &&
                     transactionDate.getMonth() == LocalDate.now().getMonth()) {
@@ -79,7 +79,7 @@ public class Report {
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
         for (Transaction transaction : Ledger.getAllEntries()) {
-            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+            LocalDate transactionDate = transaction.getDate();
 
             if (transactionDate.getYear() == LocalDate.now().getYear() &&
                     transactionDate.getMonth() == LocalDate.now().getMonth().minus(1)) {
@@ -97,7 +97,7 @@ public class Report {
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
         for (Transaction transaction : Ledger.getAllEntries()) {
-            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+            LocalDate transactionDate = transaction.getDate();
 
             if (transactionDate.getYear() == LocalDate.now().getYear()) {
 
@@ -114,7 +114,7 @@ public class Report {
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
         for (Transaction transaction : Ledger.getAllEntries()) {
-            LocalDate transactionDate = LocalDate.parse(transaction.getDate());
+            LocalDate transactionDate = transaction.getDate();
 
             if (transactionDate.getYear() == LocalDate.now().getYear()-1) {
 

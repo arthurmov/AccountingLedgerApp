@@ -3,6 +3,8 @@ package com.pluralsight;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -99,8 +101,8 @@ public class Ledger {
         String[] temp = encodedTransaction.split(Pattern.quote("|")); //split the line
 
         //assigns each part to a variable
-        String date = temp[0];
-        String time = temp[1];
+        LocalDate date = LocalDate.parse(temp[0]);
+        LocalTime time = LocalTime.parse(temp[1]);
         String description = temp[2];
         String vendor = temp[3];
         double amount = Double.parseDouble(temp[4]);

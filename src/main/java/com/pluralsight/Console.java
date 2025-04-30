@@ -16,7 +16,7 @@ public class Console {
                 return result;
 
             } catch (Exception e) {
-                System.out.println("Invalid Entry, try again!");
+                System.out.println(ColorCodes.RED + "Invalid Entry, try again!" + ColorCodes.RESET);
             }
         }
 
