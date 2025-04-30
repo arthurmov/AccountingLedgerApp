@@ -51,7 +51,7 @@ public class Ledger {
                             "Please wait.");
                     break;
                 default:
-                    System.out.println("\nInvalid option. Please try again.");
+                    System.out.println(ColorCodes.RED + "\nInvalid option. Please try again." + ColorCodes.RESET);
                     break;
             }
         } while(!option.equals("h"));

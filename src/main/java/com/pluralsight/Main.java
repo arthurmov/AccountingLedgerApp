@@ -56,7 +56,7 @@ public class Main {
                             "Goodbye!\n");
                     break;
                 default:
-                    System.out.println("\nInvalid option. Please try again.");
+                    System.out.println(ColorCodes.RED + "\nInvalid option. Please try again." + ColorCodes.RESET);
                     break;
             }
         } while(!option.equals("x"));
@@ -81,13 +81,13 @@ public class Main {
 
             writer.close();
         } catch (IOException e) {
-            System.out.println("An unexpected error occurred while saving the transaction.");
+            System.out.println(ColorCodes.RED + "An unexpected error occurred while saving the transaction." + ColorCodes.RESET);
         }
 
         if (option.equalsIgnoreCase("d")) {
-            System.out.println("\nSuccessfully added a deposit!");
+            System.out.println(ColorCodes.GREEN + "\nSuccessfully added a deposit!" + ColorCodes.RESET);
         } else if (option.equalsIgnoreCase("p")) {
-            System.out.println("\nSuccessfully made a payment!");
+            System.out.println(ColorCodes.GREEN + "\nSuccessfully made a payment!" + ColorCodes.RESET);
         }
     }
 }
