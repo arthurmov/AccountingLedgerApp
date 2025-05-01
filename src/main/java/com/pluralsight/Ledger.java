@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class Ledger {
 
-    private static Console console = new Console();
+    private static final Console console = new Console();
     private static List<Transaction> transactions = getAllEntries();
 
     public static void showScreenLedger() {
@@ -92,7 +92,7 @@ public class Ledger {
 
             reader.close(); //closes the file after finished reading
 
-            //sorts the entries to newest first
+            //sorts the entries newest first
             Main.transactionsList.sort(Comparator.comparing(
                     (Transaction t) -> LocalDateTime.of(t.getDate(), t.getTime())
             ));
@@ -110,11 +110,11 @@ public class Ledger {
         String[] temp = encodedTransaction.split(Pattern.quote("|")); //split the line
 
         //assigns each part to a variable
-        LocalDate date = LocalDate.parse(temp[0]);
-        LocalTime time = LocalTime.parse(temp[1]);
-        String description = temp[2];
-        String vendor = temp[3];
-        double amount = Double.parseDouble(temp[4]);
+        LocalDate date = LocalDate.parse(temp[0].trim());
+        LocalTime time = LocalTime.parse(temp[1].trim());
+        String description = temp[2].trim();
+        String vendor = temp[3].trim();
+        double amount = Double.parseDouble(temp[4].trim());
 
         //return all info
         return new Transaction(date, time, description, vendor, amount);

@@ -1,10 +1,12 @@
 package com.pluralsight;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Report {
 
-    private static Console console = new Console();
+    private static final Console console = new Console();
 
     public static void showScreenReports() {
 
@@ -15,6 +17,7 @@ public class Report {
                 "[3] Year To Date     - Transactions from this year\n" +
                 "[4] Previous Year    - Transactions from last year\n" +
                 "[5] Search by Vendor - Find transactions by vendor\n" +
+                "[6] Custom Search    - Filter by date, vendor, description, or amount\n" +
                 "[0] Back             - Return to the ledger menu\n" +
                 "\n" +
                 "Enter your selection: ";
@@ -149,6 +152,84 @@ public class Report {
     }
 
     private static void showScreenCustomSearch() {
+
+        String startDateInput = console.promptForString("\nEnter Start Date (MM/dd/yyyy) or press Enter to skip: ");
+        LocalDate startDate = null;
+        if (!startDateInput.isBlank()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            try {
+                startDate = LocalDate.parse(startDateInput, formatter); // Try parsing valid date
+            } catch (DateTimeParseException e) {
+                // Inform user if the input format is wrong
+                System.out.println(ColorCodes.RED + "Invalid start date format." + ColorCodes.RESET);
+            }
+        }
+
+        // Prompt for end date, allow skipping
+        String endDateInput = console.promptForString("Enter End Date (MM/dd/yyyy) or press Enter to skip: ");
+        LocalDate endDate = null;
+        if (!endDateInput.isBlank()) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+            try {
+                endDate = LocalDate.parse(endDateInput, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println(ColorCodes.RED + "Invalid end date format." + ColorCodes.RESET);
+            }
+        }
+
+        // Prompt for vendor (optional)
+        String vendorInput = console.promptForString("Enter Vendor (or press Enter to skip): ").trim();
+
+        // Prompt for description (optional)
+        String descriptionInput = console.promptForString("Enter Description (or press Enter to skip): ").trim();
+
+        // Prompt for amount, but handle it as a string so Enter can be detected
+        String amountInputRaw = console.promptForString("Enter Amount (or press Enter to skip): ");
+        Double amountInput = null;
+        if (!amountInputRaw.isBlank()) {
+            try {
+                amountInput = Double.parseDouble(amountInputRaw); // Try parsing as double
+            } catch (NumberFormatException e) {
+                System.out.println(ColorCodes.RED + "Invalid amount format." + ColorCodes.RESET);
+            }
+        }
+
+        System.out.println(Transaction.getFormattedLedgerTextHeader());
+        for (Transaction transaction : Ledger.getAllEntries()) {
+            boolean matches = true;
+
+            // Start Date Filter
+            if (startDate != null && transaction.getDate().isBefore(startDate)) {
+                matches = false;
+            }
+
+            // End Date Filter
+            if (endDate != null && transaction.getDate().isAfter(endDate)) {
+                matches = false;
+            }
+
+            // Vendor Filter
+            if (!vendorInput.isBlank() && !transaction.getVendor().equalsIgnoreCase(vendorInput)) {
+                matches = false;
+            }
+
+            // Description Filter
+            if (!descriptionInput.isBlank() && !transaction.getDescription().toLowerCase().contains(descriptionInput.toLowerCase())) {
+                matches = false;
+            }
+
+            // Amount Filter
+            if (amountInput != null && transaction.getAmount() != amountInput) {
+                matches = false;
+            }
+
+            if (matches) {
+                System.out.println(transaction.getFormattedLedgerText());
+            }
+        }
+
+        System.out.println( "\nReturning to Reports Screen...\n" +
+                "Please wait.");
 
     }
 }
