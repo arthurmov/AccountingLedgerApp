@@ -74,19 +74,15 @@ public class Main {
                 "[2] Custom\n" +
                 "Enter Your selection: ");
 
-        if(dateTimeInput == 1) {
+        if (dateTimeInput == 1) {
             //setting date and time variables to the current date and time
             date = LocalDate.now();
             time = LocalTime.now();
-        }
-
-        else if(dateTimeInput == 2) {
+        } else if (dateTimeInput == 2) {
             LocalDateTime customDateTime = customDateAndTime();
             date = customDateTime.toLocalDate();
             time = customDateTime.toLocalTime();
-        }
-
-        else {
+        } else {
             //sets date and time to current by default
             System.out.println(ColorCodes.YELLOW + "\nInvalid selection. Defaulting to current date and time." + ColorCodes.RESET);
             date = LocalDate.now();
@@ -101,11 +97,13 @@ public class Main {
             amount = -Math.abs(amount); // Payments must be negative
         }
 
+        String formattedTime = null;
+
         try {
             FileWriter writer = new FileWriter("transactions.csv", true); //opens the file
 
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-            String formattedTime = time.format(timeFormatter);
+            formattedTime = time.format(timeFormatter);
 
             writer.write(String.format("\n%s|%s|%s|%s|%.2f", date, formattedTime, description, vendor, amount)); //writes user given data to the file
 
@@ -117,10 +115,14 @@ public class Main {
 
         if (option.equalsIgnoreCase("d")) {
             System.out.println(ColorCodes.GREEN + "\nSuccessfully added a deposit!" + ColorCodes.RESET);
-
         } else if (option.equalsIgnoreCase("p")) {
             System.out.println(ColorCodes.GREEN + "\nSuccessfully made a payment!" + ColorCodes.RESET);
         }
+
+        // Print the transaction details
+        System.out.printf("\nEntry Details:\n%s|%s|%s|%s|%.2f\n\n",
+                date, formattedTime, description, vendor, amount);
+
     }
 
     private static LocalDateTime customDateAndTime() {
