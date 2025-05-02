@@ -8,18 +8,18 @@ directly from the terminal.
 
 ## Features
 
--[x] Add deposits or payment entries with optional manual date/time
--[x] Store all transactions in `transactions.csv`
--[x] View your full ledger or filter by deposits, payments, or reports
--[x] Run reports like:
+- [x] Add deposits or payment entries with optional manual date/time
+- [x] Store all transactions in `transactions.csv`
+- [x] View your full ledger or filter by deposits, payments, or reports
+- [x] Run reports like:
     - Month-To-Date
     - Previous Month
     - Year-To-Date
     - Previous Year
     - Vendor Search
     - Custom Search (date, vendor, description, amount)
--[x] Color-coded user feedback for success, errors, and prompts
--[x] Graceful handling of input errors, empty results, and user cancellations
+- [x] Color-coded user feedback for success, errors, and prompts
+- [x] Graceful handling of input errors, empty results, and user cancellations
 
 ---
 
