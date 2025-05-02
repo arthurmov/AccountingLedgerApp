@@ -11,20 +11,22 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static final Console console = new Console();
+    private static final Console console = new Console(); //create a console instance for handling user input
     public static ArrayList<Transaction> transactionsList = new ArrayList<>(); //holds all entries in memory
 
     public static void main(String[] args) {
 
+        //greet the user when the application starts
         System.out.println("\nWelcome to the Accounting Ledger App.\n" +
                 "Manage your deposits, payments, and reports easily.\n");
 
-        showScreenHome();
+        showScreenHome(); //launch the home screen
 
     }
 
     public static void showScreenHome() {
 
+        //main menu prompt displayed to the user
         String homeScreenPrompt =  ColorCodes.BLUE + "\nAccounting Ledger App\n" + ColorCodes.RESET +
                 "----------------------------------\n" +
                 "[D] Add Deposit          - Record a deposit transaction\n" +
@@ -36,32 +38,36 @@ public class Main {
 
         String option;
 
+        //menu loop runs until the user chooses to exit
         do {
+            //prompt the user for input and normalize to lowercase
             option = console.promptForString(homeScreenPrompt);
             option = option.toLowerCase();
 
+            //handle user's selection using a switch statement
             switch (option) {
                 case "d":
                     System.out.println("\n[Navigating to Add Deposit screen...]");
-                    showScreenAddTransaction(option);
+                    showScreenAddTransaction(option); //pass user input to handle deposit logic
                     break;
                 case "p":
                     System.out.println("\n[Navigating to Make Payment screen...]");
-                    showScreenAddTransaction(option);
+                    showScreenAddTransaction(option); //pass user input to handle payment logic
                     break;
                 case "l":
                     System.out.println("\n[Navigating to Ledger screen...]");
-                    Ledger.showScreenLedger();
+                    Ledger.showScreenLedger(); //launch the ledger screen
                     break;
                 case "x":
                     System.out.println("\nThank you for using the Accounting Ledger App.\n" +
-                            "Goodbye!\n");
+                            "Goodbye!\n"); //exit message
                     break;
                 default:
+                    //handles invalid commands
                     System.out.println(ColorCodes.RED + "\nInvalid option. Please try again." + ColorCodes.RESET);
                     break;
             }
-        } while(!option.equals("x"));
+        } while(!option.equals("x")); //keep looping until user exits
     }
 
     private static void showScreenAddTransaction(String option) {
@@ -69,6 +75,7 @@ public class Main {
         LocalDate date = null;
         LocalTime time = null;
 
+        //prompt the user for input
         double dateTimeInput = console.promptForDouble("\nWould you like to use the current Date and Time or input a custom Date and Time?\n" +
                 "[1] Current\n" +
                 "[2] Custom\n" +
@@ -89,9 +96,9 @@ public class Main {
             time = LocalTime.now();
         }
 
-        String vendor = console.promptForString("\nEnter Vendor: ");
+        String vendor = console.promptForString("\nEnter Vendor: ").trim();
         double amount = console.promptForDouble("Enter amount: ");
-        String description = console.promptForString("Enter Description: ");
+        String description = console.promptForString("Enter Description: ").trim();
 
         if (option.equalsIgnoreCase("p")) {
             amount = -Math.abs(amount); // Payments must be negative

@@ -10,6 +10,7 @@ public class Report {
 
     public static void showScreenReports() {
 
+        //reports screen prompt displayed to the user
         String reportsScreenPrompt = ColorCodes.BLUE + "\nReports Menu\n" + ColorCodes.RESET +
                 "------------\n" +
                 "[1] Month To Date    - Transactions from this month\n" +
@@ -24,6 +25,7 @@ public class Report {
 
         int option;
 
+        //reports loop runs until the user chooses to exit
         do {
             option = (int) console.promptForDouble(reportsScreenPrompt);
 
@@ -54,9 +56,10 @@ public class Report {
                     break;
                 case 0:
                     System.out.println( "\nReturning to Ledger Screen...\n" +
-                            "Please wait.");
+                            "Please wait."); //return message
                     break;
                 default:
+                    //handles invalid commands
                     System.out.println(ColorCodes.RED + "\nInvalid option. Please try again." + ColorCodes.RESET);
                     break;
             }
@@ -67,12 +70,15 @@ public class Report {
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        //loop through all transactions
         for (Transaction transaction : Ledger.getAllEntries()) {
             LocalDate transactionDate = transaction.getDate();
 
+            //check if the transaction occurred in the current year and current month
             if (transactionDate.getYear() == LocalDate.now().getYear() &&
                     transactionDate.getMonth() == LocalDate.now().getMonth()) {
 
+                //print the transaction if it matches the date criteria
                 System.out.println(transaction.getFormattedLedgerText());
             }
         }
@@ -85,12 +91,15 @@ public class Report {
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        //loop through all transactions
         for (Transaction transaction : Ledger.getAllEntries()) {
             LocalDate transactionDate = transaction.getDate();
 
+            //check if the transaction occurred in the current month - 1 (previous month)
             if (transactionDate.getYear() == LocalDate.now().getYear() &&
                     transactionDate.getMonth() == LocalDate.now().getMonth().minus(1)) {
 
+                //print the transaction if it matches the date criteria
                 System.out.println(transaction.getFormattedLedgerText());
             }
         }
@@ -103,11 +112,14 @@ public class Report {
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        //loop through all transactions
         for (Transaction transaction : Ledger.getAllEntries()) {
             LocalDate transactionDate = transaction.getDate();
 
+            //check if the transaction occurred in the current year
             if (transactionDate.getYear() == LocalDate.now().getYear()) {
 
+                //print the transaction if it matches the date criteria
                 System.out.println(transaction.getFormattedLedgerText());
             }
         }
@@ -120,11 +132,14 @@ public class Report {
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        //loop through all transactions
         for (Transaction transaction : Ledger.getAllEntries()) {
             LocalDate transactionDate = transaction.getDate();
 
+            //check if the transaction occurred in the current year - 1 (previous year)
             if (transactionDate.getYear() == LocalDate.now().getYear()-1) {
 
+                //print the transaction if it matches the date criteria
                 System.out.println(transaction.getFormattedLedgerText());
             }
         }
@@ -135,14 +150,18 @@ public class Report {
 
     private static void showScreenSearchByVendor() {
 
-        String vendor = console.promptForString("\nEnter the vendor name: ");
+        //prompt the user for vendor input
+        String vendor = console.promptForString("\nEnter the vendor name: ").trim();
 
         System.out.println(Transaction.getFormattedLedgerTextHeader());
 
+        //loop through all transactions
         for (Transaction transaction : Ledger.getAllEntries()) {
 
+            //compare the user input to every vendor in the file
             if (vendor.equalsIgnoreCase(transaction.getVendor())) {
 
+                //print the transaction if it matches the date criteria
                 System.out.println(transaction.getFormattedLedgerText());
             }
         }
@@ -153,6 +172,7 @@ public class Report {
 
     private static void showScreenCustomSearch() {
 
+        //prompt for start date, allow skipping
         String startDateInput = console.promptForString("\nEnter Start Date (MM/dd/yyyy) or press Enter to skip: ");
         LocalDate startDate = null;
         if (!startDateInput.isBlank()) {
@@ -165,7 +185,7 @@ public class Report {
             }
         }
 
-        // Prompt for end date, allow skipping
+        //prompt for end date, allow skipping
         String endDateInput = console.promptForString("Enter End Date (MM/dd/yyyy) or press Enter to skip: ");
         LocalDate endDate = null;
         if (!endDateInput.isBlank()) {
@@ -177,18 +197,18 @@ public class Report {
             }
         }
 
-        // Prompt for vendor (optional)
+        //prompt for vendor (optional)
         String vendorInput = console.promptForString("Enter Vendor (or press Enter to skip): ").trim();
 
-        // Prompt for description (optional)
+        //prompt for description (optional)
         String descriptionInput = console.promptForString("Enter Description (or press Enter to skip): ").trim();
 
-        // Prompt for amount, but handle it as a string so Enter can be detected
-        String amountInputRaw = console.promptForString("Enter Amount (or press Enter to skip): ");
+        //prompt for amount, but handle it as a string so Enter can be detected
+        String amountInputRaw = console.promptForString("Enter Amount (or press Enter to skip): ").trim();
         Double amountInput = null;
         if (!amountInputRaw.isBlank()) {
             try {
-                amountInput = Double.parseDouble(amountInputRaw); // Try parsing as double
+                amountInput = Double.parseDouble(amountInputRaw); // parse as double
             } catch (NumberFormatException e) {
                 System.out.println(ColorCodes.RED + "Invalid amount format." + ColorCodes.RESET);
             }
@@ -198,31 +218,32 @@ public class Report {
         for (Transaction transaction : Ledger.getAllEntries()) {
             boolean matches = true;
 
-            // Start Date Filter
+            //Start Date Filter
             if (startDate != null && transaction.getDate().isBefore(startDate)) {
                 matches = false;
             }
 
-            // End Date Filter
+            //End Date Filter
             if (endDate != null && transaction.getDate().isAfter(endDate)) {
                 matches = false;
             }
 
-            // Vendor Filter
+            //Vendor Filter
             if (!vendorInput.isBlank() && !transaction.getVendor().equalsIgnoreCase(vendorInput)) {
                 matches = false;
             }
 
-            // Description Filter
+            //Description Filter
             if (!descriptionInput.isBlank() && !transaction.getDescription().toLowerCase().contains(descriptionInput.toLowerCase())) {
                 matches = false;
             }
 
-            // Amount Filter
+            //Amount Filter
             if (amountInput != null && transaction.getAmount() != amountInput) {
                 matches = false;
             }
 
+            //print the transactions that patch the input
             if (matches) {
                 System.out.println(transaction.getFormattedLedgerText());
             }
