@@ -33,8 +33,14 @@ directly from the terminal.
 ![Reports Screen Screenshot](screenshots/reportscreen.png)
 
 ### Interesting Piece of Code
-
-
+![Interesting Piece of Code Screenshot](screenshots/interestingcode.png)
+One of the most time-consuming and educational pieces in this project was building a reusable 
+customDateAndTime() method. This allows users to manually enter a custom date and time 
+(in MM/dd/yyyy and 24-hour format), but it doesn't just assume the input is correct — it validates 
+every field. I used two while loops and custom formatting logic to check input formats and give 
+color-coded feedback. This took time to get right due to parsing errors, user edge cases, and making 
+sure the app wouldn't crash. It taught me a lot about exception handling and robust user input flow in 
+Java.
 
 ---
 
